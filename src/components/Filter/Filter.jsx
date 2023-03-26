@@ -4,15 +4,15 @@ import css from './Filter.module.css';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const changeFilter = evt => {
-    const { value: newFilterValue } = evt.currentTarget;
-    dispatch(filterContacts(newFilterValue));
-  };
 
   return (
     <label className={css.filter}>
       Find contacts by name
-      <input className={css.filterInput} type="text" onChange={changeFilter} />
+      <input
+        className={css.filterInput}
+        type="text"
+        onChange={evt => dispatch(filterContacts(evt.currentTarget.value))}
+      />
     </label>
   );
 };
