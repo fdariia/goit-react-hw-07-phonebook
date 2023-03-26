@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact } from './operations';
+import { fetchContacts, addContact, deleteContact } from './operations';
 
 const INITIAL_PHONEBOOK_STATE = {
   contacts: {
     items: [],
     isLoading: false,
-    error: null
+    error: null,
   },
   filter: '',
 };
@@ -13,7 +13,13 @@ const INITIAL_PHONEBOOK_STATE = {
 const phoneBookSlice = createSlice({
   name: 'phonebook',
   initialState: INITIAL_PHONEBOOK_STATE,
-  
+
+  reducers: {
+    filterContacts(state, action) {
+      state.filter = action.payload;
+    },
+  },
+
   extraReducers: {
     [fetchContacts.pending](state) {
       state.contacts.isLoading = true;
@@ -27,6 +33,7 @@ const phoneBookSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
+
     [addContact.pending](state) {
       state.contacts.isLoading = true;
     },
@@ -36,6 +43,24 @@ const phoneBookSlice = createSlice({
       state.contacts.items.push(action.payload);
     },
     [addContact.rejected](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = action.payload;
+    },
+
+    [deleteContact.pending](state) {
+      state.contacts.isLoading = true;
+    },
+    [deleteContact.fulfilled](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = null;
+      // const index = state.contacts.items.findIndex(
+      //   contact => contact.id === action.payload.id);
+      // state.contacts.items.splice(index, 1);
+      state.contacts.items = state.contacts.items.filter(
+        contact => contact.id !== action.payload.id
+      );
+    },
+    [deleteContact.rejected](state, action) {
       state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
@@ -55,6 +80,5 @@ const phoneBookSlice = createSlice({
   // },
 });
 
-export const { deleteContact, filterContacts } =
-  phoneBookSlice.actions;
+export const { filterContacts } = phoneBookSlice.actions;
 export const phoneBookReducer = phoneBookSlice.reducer;
