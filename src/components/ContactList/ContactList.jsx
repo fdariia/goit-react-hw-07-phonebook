@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/phoneBookSlice';
-import { getFilteredContacts } from 'redux/selectors';
+import { getContacts } from 'redux/selectors';
 import css from './ContactList.module.css';
 
 const ContactList = () => {
-  const contacts = useSelector(getFilteredContacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
+  console.log(contacts);
 
   return (
     <ul className={css.contactList}>
