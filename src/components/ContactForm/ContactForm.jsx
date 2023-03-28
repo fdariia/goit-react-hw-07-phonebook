@@ -31,6 +31,7 @@ const ContactForm = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
     onAddContact();
+    evt.currentTarget.children[2].blur();
     reset();
   };
 
