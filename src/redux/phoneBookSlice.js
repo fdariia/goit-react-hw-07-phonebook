@@ -65,19 +65,6 @@ const phoneBookSlice = createSlice({
       state.contacts.error = action.payload;
     },
   },
-  // reducers: {
-  //   addContact(state, { payload: newContact }) {
-  //     state.contacts.push(newContact);
-  //   },
-  //   deleteContact(state, { payload: contactId }) {
-  //     state.contacts = state.contacts.filter(
-  //       contact => contact.id !== contactId
-  //     );
-  //   },
-  //   filterContacts(state, { payload: filterValue }) {
-  //     state.filter = filterValue;
-  //   },
-  // },
 });
 
 export const { filterContacts } = phoneBookSlice.actions;
